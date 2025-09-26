@@ -1,9 +1,6 @@
 const InventoryCar = require('../models/InventoryCar');
 const mongoose = require('mongoose');
 
-// @desc    Add a new car to inventory
-// @route   POST /api/inventory
-// @access  Private (Protected)
 exports.addCar = async (req, res) => {
     try {
         // Associate the new car with the logged-in dealer (req.user is from 'protect' middleware)
@@ -15,9 +12,6 @@ exports.addCar = async (req, res) => {
     }
 };
 
-// @desc    Get all cars for the logged-in dealer
-// @route   GET /api/inventory/mycars
-// @access  Private (Protected)
 exports.getMyCars = async (req, res) => {
     try {
         const cars = await InventoryCar.find({ dealer: req.user._id }).populate('oemSpec').sort({ createdAt: -1 });
@@ -27,9 +21,7 @@ exports.getMyCars = async (req, res) => {
     }
 };
 
-// @desc    Get a single car by ID (for editing)
-// @route   GET /api/inventory/:id
-// @access  Private (Protected)
+
 exports.getCarById = async (req, res) => {
     try {
         const car = await InventoryCar.findById(req.params.id).populate('oemSpec');
@@ -46,9 +38,7 @@ exports.getCarById = async (req, res) => {
     }
 };
 
-// @desc    Update a car's details
-// @route   PUT /api/inventory/:id
-// @access  Private (Protected)
+
 exports.updateCar = async (req, res) => {
     try {
         let car = await InventoryCar.findById(req.params.id);
@@ -68,9 +58,7 @@ exports.updateCar = async (req, res) => {
     }
 };
 
-// @desc    Delete a single car entry
-// @route   DELETE /api/inventory/:id
-// @access  Private (Protected)
+
 exports.deleteCar = async (req, res) => {
     try {
         const car = await InventoryCar.findById(req.params.id);
@@ -87,9 +75,7 @@ exports.deleteCar = async (req, res) => {
     }
 };
 
-// @desc    Delete multiple car entries
-// @route   POST /api/inventory/delete-many
-// @access  Private (Protected)
+
 exports.deleteManyCars = async (req, res) => {
     const { carIds } = req.body;
     if (!carIds || !Array.isArray(carIds) || carIds.length === 0) {
@@ -98,7 +84,7 @@ exports.deleteManyCars = async (req, res) => {
     try {
         const result = await InventoryCar.deleteMany({
             _id: { $in: carIds },
-            dealer: req.user._id // Crucial security check
+            dealer: req.user._id 
         });
 
         if (result.deletedCount > 0) {
@@ -111,21 +97,13 @@ exports.deleteManyCars = async (req, res) => {
     }
 };
 
-// -------------------------------------------------------------------
-// --- NEW PUBLIC MARKETPLACE FUNCTION ---
-// -------------------------------------------------------------------
 
-// @desc    Get all publicly listed cars with filtering, sorting, and pagination
-// @route   GET /api/inventory
-// @access  Public
 exports.getPublicInventory = async (req, res) => {
     try {
         const queryObj = { ...req.query };
 
-        // 1. Build the base query from filters
         const query = {};
 
-        // --- FILTERING ---
         if (queryObj.minPrice || queryObj.maxPrice) {
             query.askingPrice = {};
             if (queryObj.minPrice) query.askingPrice.$gte = parseInt(queryObj.minPrice);
@@ -141,10 +119,8 @@ exports.getPublicInventory = async (req, res) => {
             query.title = { $regex: queryObj.search, $options: 'i' };
         }
 
-        // 2. Build the Mongoose query
         let result = InventoryCar.find(query).populate('oemSpec');
 
-        // --- SORTING ---
         if (req.query.sort) {
             const [field, order] = req.query.sort.split('_');
             let sortField;
@@ -157,10 +133,9 @@ exports.getPublicInventory = async (req, res) => {
                  result = result.sort({ [sortField]: sortOrder });
             }
         } else {
-            result = result.sort({ createdAt: -1 }); // Default sort
+            result = result.sort({ createdAt: -1 }); 
         }
 
-        // --- PAGINATION ---
         const page = parseInt(req.query.page, 10) || 1;
         const limit = parseInt(req.query.limit, 10) || 12;
         const startIndex = (page - 1) * limit;

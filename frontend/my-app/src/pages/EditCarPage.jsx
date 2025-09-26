@@ -13,7 +13,7 @@ const EditCarPage = () => {
         const fetchCarData = async () => {
             try {
                 const { data } = await api.get(`/inventory/${id}`);
-                // Ensure description is an array of 5 for the form
+                
                 const description = data.description || [];
                 while (description.length < 5) {
                     description.push('');
@@ -65,7 +65,7 @@ const EditCarPage = () => {
         <div className="form-container">
             <h2>Edit Car Details</h2>
             <form onSubmit={handleSubmit}>
-                {/* Form fields are similar to AddCarPage, but pre-filled */}
+                {}
                 <div className="form-group">
                     <label>Car Model</label>
                     <input 
@@ -80,7 +80,7 @@ const EditCarPage = () => {
                     <input type="text" name="title" value={formData.title} onChange={handleChange} required />
                 </div>
                 
-                {/* ... other fields like askingPrice, kmsOnOdometer, imageUrl etc. ... */}
+                {}
                 <div className="form-group">
                     <label>Asking Price (₹)</label>
                     <input type="number" name="askingPrice" value={formData.askingPrice} onChange={handleChange} required />

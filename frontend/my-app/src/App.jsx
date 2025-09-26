@@ -15,15 +15,15 @@ function App() {
             <Navbar />
             <main className="container">
                 <Routes>
-                    {/* --- CHANGE #1: The root path is now the public marketplace --- */}
+                    {}
                     <Route path="/" element={<MarketplacePage />} />
                     <Route path="/marketplace" element={<MarketplacePage />} />
 
-                    {/* Public Auth Routes */}
+                    {}
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/signup" element={<SignupPage />} />
 
-                    {/* --- CHANGE #2: The Dealer Dashboard is now at /dashboard --- */}
+                    {}
                     <Route path="/dashboard" element={<ProtectedRoute><DealerDashboard /></ProtectedRoute>} />
                     <Route path="/add-car" element={<ProtectedRoute><AddCarPage /></ProtectedRoute>} />
                     <Route path="/edit-car/:id" element={<ProtectedRoute><EditCarPage /></ProtectedRoute>} />

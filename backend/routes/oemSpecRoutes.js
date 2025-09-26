@@ -4,6 +4,5 @@ const { getOemSpecCount, searchOemSpecs, getAllOemSpecs } = require('../controll
 
 router.get('/count', getOemSpecCount);
 router.get('/search', searchOemSpecs);
-router.get('/', getAllOemSpecs); // For frontend forms
-
+router.get('/', getAllOemSpecs); 
 module.exports = router;

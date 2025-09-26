@@ -51,7 +51,6 @@ const AddCarPage = () => {
         e.preventDefault();
         setError('');
         try {
-            // Filter out empty description points
             const payload = {
                 ...formData,
                 description: formData.description.filter(d => d.trim() !== ''),
@@ -81,7 +80,7 @@ const AddCarPage = () => {
                     </select>
                 </div>
                 
-                {/* Add other form fields here */}
+                {}
                 <div className="form-group">
                     <label>Title</label>
                     <input type="text" name="title" value={formData.title} onChange={handleChange} required />

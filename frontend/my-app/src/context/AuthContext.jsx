@@ -17,8 +17,6 @@ export const AuthProvider = ({ children }) => {
     useEffect(() => {
         if (token) {
             api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-            // Optionally, you could fetch user profile here to verify token
-            // For simplicity, we'll decode it or fetch user data stored in localStorage
             const storedUser = localStorage.getItem('user');
             if (storedUser) {
                 setUser(JSON.parse(storedUser));
@@ -34,8 +32,7 @@ export const AuthProvider = ({ children }) => {
         setToken(data.token);
         setUser(data.user);
         
-        // --- CHANGE THIS LINE ---
-        navigate('/dashboard'); // Redirect to the dealer dashboard, not the homepage
+        navigate('/dashboard'); 
     };
     
     const signup = async (name, email, password) => {
@@ -45,8 +42,7 @@ export const AuthProvider = ({ children }) => {
         setToken(data.token);
         setUser(data.user);
 
-        // --- CHANGE THIS LINE ---
-        navigate('/dashboard'); // Redirect to the dealer dashboard after signup
+        navigate('/dashboard'); 
     };
     const logout = () => {
         localStorage.removeItem('token');

@@ -1,8 +1,6 @@
 const OemSpec = require('../models/OemSpec');
 
-// @desc    Get count of all OEM models
-// @route   GET /api/oem-specs/count
-// @access  Public
+
 exports.getOemSpecCount = async (req, res) => {
     try {
         const count = await OemSpec.countDocuments();
@@ -12,9 +10,7 @@ exports.getOemSpecCount = async (req, res) => {
     }
 };
 
-// @desc    Search for OEM specs (e.g., Honda City 2015)
-// @route   GET /api/oem-specs/search
-// @access  Public
+
 exports.searchOemSpecs = async (req, res) => {
     const { make, model, year } = req.query;
     if (!make || !model || !year) {
@@ -22,7 +18,7 @@ exports.searchOemSpecs = async (req, res) => {
     }
     try {
         const spec = await OemSpec.findOne({ 
-            make: new RegExp(`^${make}$`, 'i'), // Case-insensitive exact match
+            make: new RegExp(`^${make}$`, 'i'), 
             model: new RegExp(`^${model}$`, 'i'),
             year: parseInt(year)
         });
@@ -36,9 +32,7 @@ exports.searchOemSpecs = async (req, res) => {
     }
 };
 
-// @desc    Get all OEM models for dropdowns
-// @route   GET /api/oem-specs
-// @access  Public
+
 exports.getAllOemSpecs = async (req, res) => {
     try {
         const specs = await OemSpec.find({}).sort({ make: 1, model: 1, year: -1 });

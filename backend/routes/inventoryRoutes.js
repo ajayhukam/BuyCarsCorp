@@ -7,21 +7,18 @@ const {
     updateCar,
     deleteCar,
     deleteManyCars,
-    getPublicInventory // <-- Make sure to import the new function
+    getPublicInventory 
 } = require('../controllers/inventoryController');
 const { protect } = require('../middleware/authMiddleware');
 
 
-// --- PUBLIC ROUTES ---
-// This GET route is for the public marketplace and must be defined BEFORE 'protect'.
+
 router.route('/').get(getPublicInventory);
 
 
-// --- PROTECTED ROUTES ---
-// Apply the 'protect' middleware to all routes defined BELOW this line.
+
 router.use(protect);
 
-// POST to '/' is a protected route for adding a car.
 router.route('/').post(addCar);
 
 router.route('/mycars').get(getMyCars);

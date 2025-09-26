@@ -1,20 +1,19 @@
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
-const path = require('path'); // <-- ADD THIS LINE to import the 'path' module
+const path = require('path'); 
 
 const { oemSpecs } = require('./dummyData');
 const OemSpec = require('../models/OemSpec');
 const InventoryCar = require('../models/InventoryCar');
 const User = require('../models/User');
 
-// --- THIS IS THE FIX ---
-// Tell dotenv to look for the .env file in the PARENT directory (the backend root)
+
 dotenv.config({ path: path.resolve(__dirname, '../.env') }); 
-// --- END OF FIX ---
+
 
 const connectDB = async () => {
     try {
-        // Now process.env.MONGO_URI will be correctly loaded
+        
         await mongoose.connect(process.env.MONGO_URI); 
         console.log('MongoDB Connected for Seeding...');
     } catch (error) {
@@ -26,11 +25,10 @@ const connectDB = async () => {
 const importData = async () => {
     try {
         console.log('Clearing old data...');
-        // Clear existing data
+        
         await OemSpec.deleteMany();
         await InventoryCar.deleteMany();
-        await User.deleteMany(); // WARNING: This deletes all users.
-
+        await User.deleteMany(); 
         console.log('Importing OEM Specs...');
         await OemSpec.insertMany(oemSpecs);
         
@@ -56,10 +54,8 @@ const destroyData = async () => {
 };
 
 
-// Connect to DB first, then run import/destroy
 connectDB().then(() => {
-    // To run import: node seed/seedScript.js
-    // To run destroy: node seed/seedScript.js -d
+   
     if (process.argv[2] === '-d') {
         destroyData();
     } else {

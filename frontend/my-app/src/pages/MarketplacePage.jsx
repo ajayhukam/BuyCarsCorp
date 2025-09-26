@@ -1,20 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import api from '../api';
-import CarCard from '../components/CarCard'; // Reuse the CarCard component
+import CarCard from '../components/CarCard'; 
 
 const MarketplacePage = () => {
     const [cars, setCars] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
 
-    // State for filters and sorting
+    
     const [filters, setFilters] = useState({
         search: '',
         minPrice: '',
         maxPrice: '',
         maxMileage: '',
         color: '',
-        sort: 'createdAt_desc' // Default sort: newest first
+        sort: 'createdAt_desc' 
     });
 
     const [pagination, setPagination] = useState({});
@@ -23,7 +23,7 @@ const MarketplacePage = () => {
     const fetchCars = async () => {
         setLoading(true);
         try {
-            // Build query parameters from state
+            
             const params = new URLSearchParams({ page });
             if (filters.search) params.append('search', filters.search);
             if (filters.minPrice) params.append('minPrice', filters.minPrice);
@@ -45,7 +45,7 @@ const MarketplacePage = () => {
         }
     };
     
-    // Fetch cars whenever filters or page changes
+    
     useEffect(() => {
         fetchCars();
     }, [filters, page]);
@@ -53,7 +53,7 @@ const MarketplacePage = () => {
     const handleFilterChange = (e) => {
         const { name, value } = e.target;
         setFilters(prev => ({ ...prev, [name]: value }));
-        setPage(1); // Reset to first page on filter change
+        setPage(1); 
     };
 
     const handleResetFilters = () => {
@@ -74,7 +74,7 @@ const MarketplacePage = () => {
             <p>Find your next car from our trusted dealers.</p>
 
             <div className="filters-container">
-                {/* Search Bar */}
+                {}
                 <input
                     type="text"
                     name="search"
@@ -84,7 +84,7 @@ const MarketplacePage = () => {
                     className="filter-item"
                 />
                 
-                {/* Price Filters */}
+                {}
                 <input
                     type="number"
                     name="minPrice"
@@ -102,7 +102,7 @@ const MarketplacePage = () => {
                     className="filter-item"
                 />
                 
-                {/* Mileage and Color Filters */}
+                {}
                 <input
                     type="number"
                     name="maxMileage"
@@ -120,7 +120,7 @@ const MarketplacePage = () => {
                     className="filter-item"
                 />
                 
-                {/* Sort Dropdown */}
+                {}
                 <select name="sort" value={filters.sort} onChange={handleFilterChange} className="filter-item">
                     <option value="createdAt_desc">Newest First</option>
                     <option value="price_asc">Price: Low to High</option>
